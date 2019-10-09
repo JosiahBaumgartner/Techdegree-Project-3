@@ -28,9 +28,7 @@ $design.change( function() {
   // Display color selection
   $color.parent().show();
   // Remove "Select Theme" option
-  if ( $design.children().first().val() === "Select Theme" ) {
-  $design.children().first().remove();
-  }
+  $("#design option:contains(Select Theme)").remove();
 
   // Only displays colors valid for currently selected theme option
   if ( $design.val() === "js puns" ) {
