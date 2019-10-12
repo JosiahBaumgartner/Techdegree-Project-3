@@ -1,4 +1,4 @@
-/* ================================= 
+/* =================================
   Base Element Styles
 ==================================== */
 
@@ -17,16 +17,16 @@ button {
 body {
   font: 1em/1.5;
   color: rgba(6, 49, 68, 0.9);
-	background: #CDE0FB;
+	background: #0b0c10;
 }
 
 header {
-	text-align: center;  
+	text-align: center;
 }
 
 h1 {
 	font-size: 2.5em;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+	text-shadow: 0 1px 0 rgba(22, 59, 51, 0.85);
 	margin: 0;
 }
 
@@ -34,15 +34,24 @@ a {
   text-decoration: none;
 }
 
-/* ================================= 
+
+span,
+h1 {
+  color: #c5c6c7;
+}
+
+p {
+  color: #c5c6c7;
+}
+/* =================================
   Form Element Styles
 ==================================== */
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #9BBEEF;
-	border: 2px solid rgba(8, 63, 87, 0.7);
-	border-radius: 3px;
+	background: #1f2833;
+	border: 2px solid #45a29e;
+	border-radius: 5px;
 }
 
 fieldset,
@@ -58,14 +67,15 @@ fieldset {
 
 legend,
 button {
-	font-size: 1.25em;	
+	font-size: 1.25em;
 }
 
 legend {
 	font-weight: bold;
 	padding-top: .5em;
-	border-top: 2px solid rgba(8, 63, 87, 0.6);
+	border-top: 2px solid #45a29e;
 	margin-bottom: 1.125em;
+  color: #c5c6c7;
 }
 
 input[type="text"],
@@ -75,59 +85,78 @@ legend {
 }
 
 label {
-	color: #000;
+	color: #c5c6c7;
 	display: block;
 	margin-bottom: .5em;
+  font-weight: bold;
 }
 
 input,
 select {
-	margin-bottom: 1.125em;	
+	margin-bottom: 1.125em;
 }
 
 input {
 	font-size: 1em;
 	font-weight: 500;
 	padding: .8em;
-	background: #e9f6fb;
-	border: 2px solid #6F9DDC;
+	background: #45a29e;
+	border: 2px solid #66fcf1;
 	border-radius: 3px;
 	outline: none;
 }
 
 input:focus {
-	background: #fff;
-	border-color: #5e97b0;
+	background: #66fcf1;
+	border-color: #66fcf1;
 	transition: border-color .4s, background-color .4s;
+}
+
+/* Override chrome autofill bg color hack found at https://webagility.com/posts/the-ultimate-list-of-hacks-for-chromes-forced-yellow-background-on-autocompleted-inputs */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px #45a29e inset;
 }
 
 input[type="checkbox"],
 input[type="radio"] {
 	display: inline-block;
+  color: #c5c6c7;
+  font-weight: bold;
+  font-family: 'roboto', sans-serif;
+}
+
+.disabled-checkbox-label {
+  color: #404040;
 }
 
 button {
-	color: #fff;
+	color: #c5c6c7;
 	padding: .55em 1.25em;
-	background: #083f57;
+	background: #45a29e;
 	margin: 1.25em 0 .5em;
 	cursor: pointer;
-	border: 2px solid black;
+	border: 2px solid #66fcf1;
 	border-radius: 4px;
 	transition: all 0.5s;
 }
 
 button:hover {
-	background: #6F9DDC;
+	background: #66fcf1;
 }
 
-input, 
-select, 
+input,
+select,
 option {
 	font-family: 'roboto', sans-serif;
+  color: #0b0c10;
+  font-weight: bold;
 }
 
-/* ================================= 
+select {
+  background-color: #c5c6c7;
+}
+
+/* =================================
   Page Styles
 ==================================== */
 
@@ -149,7 +178,7 @@ option {
 	margin-top: 1.25em;
 }
 
-/* ================================= 
+/* =================================
   Helper Classes
 ==================================== */
 
@@ -163,7 +192,17 @@ option {
   clear: both;
 }
 
-/* ================================= 
+.validation-error-input {
+  border-color: #f13c20;
+  background-color: #801808;
+  transition: border-color .4s, background-color .4s;
+}
+
+.validation-error-message {
+  color: #f13c20;
+  font-weight: bold;
+}
+/* =================================
   Media Queries
 ==================================== */
 
