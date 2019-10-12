@@ -27,11 +27,6 @@ $name.blur( function() {
 // Defaults focus onto first input field, name.
 $name.focus();
 
-// Blur event handler for email field validation
-$mail.blur( function() {
-  emptyInputCheck( $mail );
-});
-
 // Hides text field to type other job titles unless "other" option is selected.
 $otherTitle.hide();
 
@@ -129,6 +124,17 @@ $payment.change( function(event) {
   else if ( $payment.val() === "Bitcoin" ) {
     showPaymentMethod("#bitcoin");
   }
+});
+
+/*
+
+          *** VALIDATION ***
+
+*/
+
+// Blur event handler for email field validation
+$mail.blur( function() {
+  emptyInputCheck( $mail );
 });
 
 // Checks for empty credit card number field
