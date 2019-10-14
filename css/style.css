@@ -50,7 +50,7 @@ p {
 form {
 	padding: .875em 1.875em 1.875em;
 	background: #1f2833;
-	border: 2px solid #45a29e;
+	border: 2px solid #3d7097;
 	border-radius: 5px;
 }
 
@@ -73,7 +73,7 @@ button {
 legend {
 	font-weight: bold;
 	padding-top: .5em;
-	border-top: 2px solid #45a29e;
+	border-top: 2px solid #3d7097;
 	margin-bottom: 1.125em;
   color: #c5c6c7;
 }
@@ -100,21 +100,21 @@ input {
 	font-size: 1em;
 	font-weight: 500;
 	padding: .8em;
-	background: #45a29e;
-	border: 2px solid #66fcf1;
+	background: #3d7097;
+	border: 2px solid #66bcfc;
 	border-radius: 3px;
 	outline: none;
 }
 
 input:focus {
-	background: #66fcf1;
-	border-color: #66fcf1;
+	background: #66bcfc;
+	border-color: #66bcfc;
 	transition: border-color .4s, background-color .4s;
 }
 
 /* Override chrome autofill bg color hack found at https://webagility.com/posts/the-ultimate-list-of-hacks-for-chromes-forced-yellow-background-on-autocompleted-inputs */
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 100px #45a29e inset;
+    -webkit-box-shadow: 0 0 0 100px #3d7097 inset;
 }
 
 input[type="checkbox"],
@@ -132,16 +132,16 @@ input[type="radio"] {
 button {
 	color: #c5c6c7;
 	padding: .55em 1.25em;
-	background: #45a29e;
+	background: #3d7097;
 	margin: 1.25em 0 .5em;
 	cursor: pointer;
-	border: 2px solid #66fcf1;
+	border: 2px solid #66bcfc;
 	border-radius: 4px;
 	transition: all 0.5s;
 }
 
 button:hover {
-	background: #66fcf1;
+	background: #66bcfc;
 }
 
 input,
@@ -156,6 +156,9 @@ select {
   background-color: #c5c6c7;
 }
 
+input::placeholder{
+  color: #0b0c10;
+}
 /* =================================
   Page Styles
 ==================================== */
