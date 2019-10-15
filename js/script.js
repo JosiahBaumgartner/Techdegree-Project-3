@@ -130,9 +130,21 @@ $payment.change( function(event) {
 
 */
 
+// Checks if an input is empty
 function inputCheck(inputElement) {
   const check = inputElement.val() !== ""
   return check;
+}
+
+// Checks if any checkboxes within child elements are checked.
+function checkboxValidation(checkboxParent) {
+  if ( checkboxParent.find("input").filter(":checkbox:checked").length; ) {
+      if ( checkboxParent.children().eq(0).first().text().includes("Field Required") === true ) {
+        checkboxParent.children().first().remove();
+      }
+  } else if ( checkboxParent.children().first().text().includes("Field Required") === false ) {
+    checkboxParent.prepend("<label class='validation-error-message'>Field Required</label>");
+  }
 }
 
 // Conditional that checks if an input is empty and turns it red if it is or sets it back to default if it isn't
@@ -177,21 +189,7 @@ $mail.on("blur input", function() {
 
 // Change event handler for Activities field, conditional to determine if any checkboxes have been checked and displayerror message if none have.
 $(".activities input").change( function() {
-  const activityChecked = false;
-  if ( $(".activities input").eq(0).prop("checked") === true ||
-       $(".activities input").eq(1).prop("checked") === true ||
-       $(".activities input").eq(2).prop("checked") === true ||
-       $(".activities input").eq(3).prop("checked") === true ||
-       $(".activities input").eq(4).prop("checked") === true ||
-       $(".activities input").eq(5).prop("checked") === true ||
-       $(".activities input").eq(6).prop("checked") === true ) {
-         activityChecked = true;
-      if ( $activities.children().eq(0).first().text().includes("Field Required") === true ) {
-        $activities.children().first().remove();
-      }
-  } else if ( $activities.children().first().text().includes("Field Required") === false ) {
-    $activities.prepend("<label class='validation-error-message'>Field Required</label>");
-  }
+  checkboxValidation($activities)
 });
 
   // Blur event handler for Credit Card field
@@ -224,24 +222,12 @@ function masterValidation() {
     // Event handler for "register" button
   $("form button:contains(Register)").click( function(event) {
 
-    if ( inputCheck($name) === false || inputCheck($mail) === false || activityChecked === false ) {
+    if ( inputCheck($name) === false || inputCheck($mail) === false || $(".activities input:checkbox:checked").length <= 0 ) {
       event.preventDefault();
       emptyInputValidation( $name );
       emptyInputValidation( $mail );
-      //This un-DRY section triggers on button click instead of change
-      if ( $(".activities input").eq(0).prop("checked") === true ||
-           $(".activities input").eq(1).prop("checked") === true ||
-           $(".activities input").eq(2).prop("checked") === true ||
-           $(".activities input").eq(3).prop("checked") === true ||
-           $(".activities input").eq(4).prop("checked") === true ||
-           $(".activities input").eq(5).prop("checked") === true ||
-           $(".activities input").eq(6).prop("checked") === true ) {
-         if ( $activities.children().first().text().includes("Field Required") === true ) {
-           $activities.children().first().remove();
-         }
-      } else if ( $activities.children().first().text().includes("Field Required") === false ) {
-        $activities.prepend("<label class='validation-error-message'>Field Required</label>");
-      }
+      //Triggers activity section checkbox validaton on button click instead of change as before
+      checkboxValidation();
       // Credit card, zipcode and cvv field validation only active if credit card option is selected.
       if ($payment.val() === "Credit Card" && inputCheck($("#cc-num")) === false && inputCheck($("#zip")) === false && inputCheck($("#cvv")) === false) {
         allCCValidation();
