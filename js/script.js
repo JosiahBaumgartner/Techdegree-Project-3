@@ -138,7 +138,7 @@ function inputCheck(inputElement) {
 
 // Checks if any checkboxes within child elements are checked.
 function checkboxValidation(checkboxParent) {
-  if ( checkboxParent.find("input").filter(":checkbox:checked").length; ) {
+  if ( checkboxParent.find("input").filter(":checkbox:checked").length ) {
       if ( checkboxParent.children().eq(0).first().text().includes("Field Required") === true ) {
         checkboxParent.children().first().remove();
       }
