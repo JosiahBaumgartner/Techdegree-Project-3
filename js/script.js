@@ -192,7 +192,7 @@ $(".activities input").change( function() {
   checkboxValidation($activities)
 });
 
-  // Blur event handler for Credit Card field
+// Blur event handler for Credit Card field
 $("#cc-num").on("blur input", function() {
   emptyInputValidation( $("#cc-num") );
   // Change event handler for Credit Card Number field for real time Credit Card Number validation
@@ -218,26 +218,16 @@ $("#cvv").blur( function() {
   emptyInputValidation( $("#cvv") );
 });
 
-function masterValidation() {
-    // Event handler for "register" button
-  $("form button:contains(Register)").click( function(event) {
+// Event handler for "register" button instead of change/input/blur for real time validation as before
+$("form button:contains(Register)").click( function(event) {
 
-    if ( inputCheck($name) === false || inputCheck($mail) === false || $(".activities input:checkbox:checked").length <= 0 ) {
-      event.preventDefault();
-      emptyInputValidation( $name );
-      emptyInputValidation( $mail );
-      //Triggers activity section checkbox validaton on button click instead of change as before
-      checkboxValidation();
-      // Credit card, zipcode and cvv field validation only active if credit card option is selected.
-      if ($payment.val() === "Credit Card" && inputCheck($("#cc-num")) === false && inputCheck($("#zip")) === false && inputCheck($("#cvv")) === false) {
-        allCCValidation();
-      }
-    }
-    // Super not DRY, dunno how to make this work in a single condition though
-    else if ($payment.val() === "Credit Card" && inputCheck($("#cc-num")) === false && inputCheck($("#zip")) === false && inputCheck($("#cvv")) === false) {
-      event.preventDefault();
-      allCCValidation();
-    }
-  });
-}
-masterValidation();
+  if ( (inputCheck($name) === false || inputCheck($mail) === false || $(".activities input:checkbox:checked").length <= 0) ||
+    // Credit card, zipcode and cvv field validation only active if credit card option is selected.
+   ($payment.val() === "Credit Card" && (inputCheck($("#cc-num")) === false || inputCheck($("#zip")) === false || inputCheck($("#cvv")) === false)) ) {
+    event.preventDefault();
+    emptyInputValidation( $name );
+    emptyInputValidation( $mail );
+    checkboxValidation($activities);
+    allCCValidation();
+  }
+});
