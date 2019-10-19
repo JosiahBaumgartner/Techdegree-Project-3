@@ -63,20 +63,15 @@ $design.change( function() {
 
 // Activites section change event handler
 $activities.change( function(event) {
-  // Clear old total label
-  if ( $activities.children().last().text().includes("Total: $") === true ) {
-    $activities.children().last().remove();
-  }
 
   // Adds or subtracts price of course selected and updates global total price variable "totalCost"
-  if ( $(event.target).prop("checked") === true){
+  if ( $(event.target).prop("checked")){
     totalCost += parseInt($(event.target).data("cost").substring(1));
   } else {
     totalCost -= parseInt($(event.target).data("cost").substring(1));
   }
-
-  // Re-append updated total price label
-  $activities.append( "<label>Total: $" + totalCost + "</label>" );
+  // Updates total cost label to current value
+  $activities.children().last().text("Total: $" + totalCost)
 
   // Disables conflicting activities when an activity is selected
   $(".activities input").each( function() {
