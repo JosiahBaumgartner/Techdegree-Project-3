@@ -163,6 +163,7 @@ function allCCValidation() {
   emptyInputValidation( $("#cvv") );
 }
 
+// Tests an element's value against a regex and displays error message and highlights red if false. Removes error message and error class on true.
 function formatValidation(element, regex, message) {
   if ( regex.test($(element).val()) === true ) {
     $(element).removeClass("validation-error-input");
@@ -197,19 +198,21 @@ $(".activities input").change( function() {
 // Blur event handler for Credit Card field
 $("#cc-num").on("blur input", function() {
   emptyInputValidation( $("#cc-num") );
-  // Change event handler for Credit Card Number field for real time Credit Card Number validation
+  // Real time Credit Card Number regex validation
   formatValidation("#cc-num", ccRegex, "Credit card number must be between 13-16 digits long");
 });
 
 // Blur event handler for ZIP field
 $("#zip").on("blur input", function() {
   emptyInputValidation( $("#zip") );
+  // Real time Zip Code regex validation
   formatValidation("#zip", zipRegex, "Zip Code should be 5 digits long");
 });
 
 // Blur event handler for CVV field
 $("#cvv").on("blur input", function() {
   emptyInputValidation( $("#cvv") );
+  // Real time CVV regex validation
   formatValidation("#cvv", cvvRegex, "CVV should be 3 or 4 digits long");
 });
 
