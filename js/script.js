@@ -12,6 +12,8 @@ const $activities = $(".activities").append( "<label>Total: $" + totalCost + "</
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 // Credit Card 13-16 digit regex from https://www.regular-expressions.info/creditcard.html
 const ccRegex = /\b\d{13,16}\b/;
+const zipRegex = /^\d{5}$/;
+const cvvRegex = /^[0-9]{3,4}$/;
 
 /* NAME */
 
@@ -161,6 +163,20 @@ function allCCValidation() {
   emptyInputValidation( $("#cvv") );
 }
 
+function formatValidation(element, regex, message) {
+  if ( regex.test($(element).val()) === true ) {
+    $(element).removeClass("validation-error-input");
+    if ( $(element).prev().text().includes(message) === true ) {
+      $(element).prev().remove();
+    }
+    // Checks if the field value matches Regex and if the format or "field required" messages aren't already there.
+  } else if (regex.test($(element).val()) === false && $(element).prev().text().includes(message) === false && $(element).prev().text().includes('Field Required') === false) {
+    $(element).addClass("validation-error-input");
+    $(element).before('<label class="validation-error-message"></label>');
+    $(element).prev().text(message);
+  }
+}
+
 // Blur event handler for Name field
 $name.blur( function() {
   emptyInputValidation( $name );
@@ -170,16 +186,7 @@ $name.blur( function() {
 $mail.on("blur input", function() {
   emptyInputValidation( $mail );
   // Change event handler for Email field for real time Email validation
-  if ( emailRegex.test($mail.val()) === true ) {
-    $mail.removeClass("validation-error-input");
-     if ( $mail.prev().text().includes('Email must be in this format: "example@site.com"') === true ) {
-       $mail.prev().remove();
-     }
-    // Very long 3 gate conditional that I know is bad :( It checks if the email field value matches Regex and if the "email format" or "field required" messages aren't already there.
-  } else if (emailRegex.test($mail.val()) === false && $mail.prev().text().includes('Email must be in this format: "example@site.com"') === false && $mail.prev().text().includes('Field Required') === false) {
-    $mail.addClass("validation-error-input");
-    $mail.before('<label class="validation-error-message">Email must be in this format: "example@site.com"</label>');
-  }
+  formatValidation($mail, emailRegex,'Email must be in this format: "example@site.com"');
 });
 
 // Change event handler for Activities field, conditional to determine if any checkboxes have been checked and displayerror message if none have.
@@ -191,26 +198,19 @@ $(".activities input").change( function() {
 $("#cc-num").on("blur input", function() {
   emptyInputValidation( $("#cc-num") );
   // Change event handler for Credit Card Number field for real time Credit Card Number validation
-  if ( ccRegex.test($("#cc-num").val()) === true ) {
-    $("#cc-num").removeClass("validation-error-input");
-    if ( $("#cc-num").prev().text().includes('Credit card number must be between 13-16 digits long') === true ) {
-      $("#cc-num").prev().remove();
-    }
-    // Very long 3 gate conditional that I know is bad :( It checks if the cc field value matches Regex and if the "cc format" or "field required" messages aren't already there.
-  } else if (ccRegex.test($("#cc-num").val()) === false && $("#cc-num").prev().text().includes('Credit card number must be between 13-16 digits long') === false && $("#cc-num").prev().text().includes('Field Required') === false) {
-    $("#cc-num").addClass("validation-error-input");
-    $("#cc-num").before('<label class="validation-error-message">Credit card number must be between 13-16 digits long</label>');
-  }
+  formatValidation("#cc-num", ccRegex, "Credit card number must be between 13-16 digits long");
 });
 
 // Blur event handler for ZIP field
-$("#zip").blur( function() {
+$("#zip").on("blur input", function() {
   emptyInputValidation( $("#zip") );
+  formatValidation("#zip", zipRegex, "Zip Code should be 5 digits long");
 });
 
 // Blur event handler for CVV field
-$("#cvv").blur( function() {
+$("#cvv").on("blur input", function() {
   emptyInputValidation( $("#cvv") );
+  formatValidation("#cvv", cvvRegex, "CVV should be 3 or 4 digits long");
 });
 
 // Event handler for "register" button instead of change/input/blur for real time validation as before
@@ -218,7 +218,10 @@ $("form button:contains(Register)").click( function(event) {
 
   if ( (inputCheck($name) === false || inputCheck($mail) === false || $(".activities input:checkbox:checked").length <= 0) ||
     // Credit card, zipcode and cvv field validation only active if credit card option is selected.
-   ($payment.val() === "Credit Card" && (inputCheck($("#cc-num")) === false || inputCheck($("#zip")) === false || inputCheck($("#cvv")) === false)) ) {
+    ($payment.val() === "Credit Card" &&
+    (inputCheck($("#cc-num")) === false || ccRegex.test($("#cc-num").val()) === false
+    || inputCheck($("#zip")) === false || zipRegex.test($("#zip").val()) === false
+    || inputCheck($("#cvv")) === false || cvvRegex.test($("#cvv").val()) === false )) ) {
     event.preventDefault();
     emptyInputValidation( $name );
     emptyInputValidation( $mail );
